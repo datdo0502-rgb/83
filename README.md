@@ -1,11 +1,11 @@
 
 <html lang="vi">
-
 <head>
 <meta charset="UTF-8">
-<title>Special Gift</title>
+<title>Special Puzzle</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600&display=swap&subset=vietnamese" rel="stylesheet">
+<!-- FONT -->
+<link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@500;600;700&subset=vietnamese&display=swap" rel="stylesheet">
 
 <style>
 
@@ -13,29 +13,31 @@
 margin:0;
 padding:0;
 box-sizing:border-box;
-font-family:Arial, sans-serif;
 }
 
 body{
 height:100vh;
-background:url("background.jpg");
-background-size:cover;
-background-position:center;
+font-family:Arial;
+display:flex;
+justify-content:center;
+align-items:center;
+flex-direction:column;
+background:url("background.jpg") no-repeat center/cover;
 overflow:hidden;
+color:white;
 }
 
+/* TIÊU ĐỀ */
 
 .title{
-font-family:'Dancing Script', cursive;
-
+font-family:'Dancing Script',cursive;
 position:absolute;
 top:40px;
 left:50%;
 transform:translateX(-50%);
-
-font-size:80px;
-color:white;
+font-size:70px;
 text-align:center;
+color:white;
 
 text-shadow:
 0 0 8px #ffb6c9,
@@ -50,8 +52,6 @@ position:absolute;
 top:140px;
 left:50%;
 transform:translateX(-50%);
-
-color:white;
 font-size:22px;
 font-style:italic;
 text-align:center;
@@ -62,45 +62,31 @@ text-shadow:0 0 10px rgba(255,255,255,0.6);
 /* HỘP CÂU HỎI */
 
 .box{
-position:absolute;
-top:50%;
-left:50%;
-transform:translate(-50%,-50%);
-
-background:rgba(0,0,0,0.7);
-padding:35px;
+background:rgba(0,0,0,0.65);
+padding:40px;
 border-radius:18px;
-
-color:white;
 text-align:center;
 width:320px;
 }
 
-/* CÂU HỎI */
-
-.question{
-font-size:20px;
+.box h2{
 margin-bottom:20px;
 }
 
-/* INPUT */
-
 input{
-padding:10px;
-width:100%;
-border:none;
+padding:12px;
+width:220px;
 border-radius:8px;
-margin-bottom:15px;
+border:none;
+margin-bottom:20px;
 }
 
-/* BUTTON */
-
 button{
-padding:10px 25px;
-background:#ff4f8b;
+padding:12px 26px;
 border:none;
-color:white;
 border-radius:10px;
+background:#ff4f8b;
+color:white;
 font-size:16px;
 cursor:pointer;
 }
@@ -108,19 +94,23 @@ cursor:pointer;
 /* TIM BAY */
 
 .heart{
-position:fixed;
-bottom:-40px;
+position:absolute;
+color:#ff6b9a;
 font-size:20px;
-animation:fly 6s linear infinite;
+animation:float 6s linear infinite;
+opacity:0.8;
 }
 
-@keyframes fly{
+@keyframes float{
 0%{
-transform:translateY(0);
+transform:translateY(100vh);
+opacity:0;
+}
+50%{
 opacity:1;
 }
 100%{
-transform:translateY(-110vh);
+transform:translateY(-10vh);
 opacity:0;
 }
 }
@@ -131,7 +121,7 @@ opacity:0;
 <body>
 
 <h1 class="title">
-A Puzzle Made Just For You
+<span id="typing"></span>
 </h1>
 
 <p class="subtitle">
@@ -140,60 +130,84 @@ A few questions, a few memories, and a little surprise waiting.
 
 <div class="box">
 
-<div id="question" class="question">
+<h2 id="question">
 Câu 1: Ngày đầu tiên mình gặp nhau là ngày nào?
-</div>
+</h2>
 
 <input id="answer" placeholder="Nhập câu trả lời">
 
-<button onclick="check()">Trả lời</button>
+<br>
+
+<button onclick="checkAnswer()">Trả lời</button>
 
 </div>
 
 <script>
 
+/* HIỆU ỨNG GÕ CHỮ TIÊU ĐỀ */
+
+const text="A Puzzle Made Just For You"
+let i=0
+
+function typeWriter(){
+
+if(i<text.length){
+document.getElementById("typing").innerHTML+=text.charAt(i)
+i++
+setTimeout(typeWriter,70)
+}
+
+}
+
+typeWriter()
+
 /* CÂU HỎI */
 
 const questions=[
-"Câu 1: Ngày đầu tiên mình gặp nhau là ngày nào?",
-"Câu 2: Món ăn em thích nhất là gì?",
-"Câu 3: Ai là người tỏ tình trước?",
-"Câu 4: Lần đầu mình đi chơi ở đâu?",
-"Câu 5: Anh hay gọi em bằng biệt danh gì?"
-]
-
-const answers=[
-"dd/mm/yyyy",
-"sushi",
-"anh",
-"cafe",
-"bé"
+{
+q:"Câu 1: Ngày đầu tiên mình gặp nhau là ngày nào?",
+a:"14/02"
+},
+{
+q:"Câu 2: Món ăn em thích nhất?",
+a:"sushi"
+},
+{
+q:"Câu 3: Ai là người tỏ tình trước?",
+a:"anh"
+},
+{
+q:"Câu 4: Nơi mình đi chơi nhiều nhất?",
+a:"quán cà phê"
+}
 ]
 
 let current=0
 
-function check(){
+function checkAnswer(){
 
 let input=document.getElementById("answer").value.toLowerCase()
 
-if(input==answers[current]){
+if(input===questions[current].a){
 
 current++
 
-if(current==questions.length){
+if(current<questions.length){
 
-document.querySelector(".box").innerHTML=
-"<h2>Chúc em 8/3 thật vui ❤️</h2><br>Anh luôn thương em."
-
-return
-}
-
-document.getElementById("question").innerText=questions[current]
+document.getElementById("question").innerText=questions[current].q
 document.getElementById("answer").value=""
 
 }else{
 
-alert("Sai rồi nha 😝")
+document.querySelector(".box").innerHTML=
+
+"<h2>Chúc em một ngày 8/3 thật hạnh phúc ❤️<br>Anh luôn ở đây với em.</h2>"
+
+}
+
+}else{
+
+alert("Sai rồi 😝 thử lại đi")
 
 }
 
@@ -203,13 +217,17 @@ alert("Sai rồi nha 😝")
 
 function createHeart(){
 
-let heart=document.createElement("div")
-heart.className="heart"
-heart.innerHTML="❤️"
+const heart=document.createElement("div")
+
+heart.classList.add("heart")
+
+heart.innerHTML="❤"
 
 heart.style.left=Math.random()*100+"vw"
-heart.style.fontSize=Math.random()*20+10+"px"
-heart.style.animationDuration=Math.random()*3+4+"s"
+
+heart.style.fontSize=(10+Math.random()*20)+"px"
+
+heart.style.animationDuration=(4+Math.random()*4)+"s"
 
 document.body.appendChild(heart)
 
