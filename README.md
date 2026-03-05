@@ -1,8 +1,11 @@
-
+<!DOCTYPE html>
 <html lang="vi">
+
 <head>
 <meta charset="UTF-8">
-<title>Trò chơi 8/3</title>
+<title>Special Gift</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600&display=swap&subset=vietnamese" rel="stylesheet">
 
 <style>
 
@@ -10,39 +13,78 @@
 margin:0;
 padding:0;
 box-sizing:border-box;
-font-family: Arial, sans-serif;
+font-family:Arial, sans-serif;
 }
 
 body{
 height:100vh;
-display:flex;
-justify-content:center;
-align-items:center;
 background:url("background.jpg");
 background-size:cover;
 background-position:center;
 overflow:hidden;
 }
 
-/* hộp câu hỏi */
+/* TIÊU ĐỀ */
 
-.box{
-background:rgba(0,0,0,0.75);
-padding:40px;
-border-radius:20px;
-text-align:center;
+.title{
+font-family:'Dancing Script', cursive;
+
+position:absolute;
+top:40px;
+left:50%;
+transform:translateX(-50%);
+
+font-size:80px;
 color:white;
-width:350px;
+text-align:center;
+
+text-shadow:
+0 0 8px #ffb6c9,
+0 0 18px #ff8fb1,
+0 0 30px #ff6f9f;
 }
 
-/* câu hỏi */
+/* CÂU DƯỚI TIÊU ĐỀ */
+
+.subtitle{
+position:absolute;
+top:140px;
+left:50%;
+transform:translateX(-50%);
+
+color:white;
+font-size:22px;
+font-style:italic;
+text-align:center;
+
+text-shadow:0 0 10px rgba(255,255,255,0.6);
+}
+
+/* HỘP CÂU HỎI */
+
+.box{
+position:absolute;
+top:50%;
+left:50%;
+transform:translate(-50%,-50%);
+
+background:rgba(0,0,0,0.7);
+padding:35px;
+border-radius:18px;
+
+color:white;
+text-align:center;
+width:320px;
+}
+
+/* CÂU HỎI */
 
 .question{
 font-size:20px;
 margin-bottom:20px;
 }
 
-/* input */
+/* INPUT */
 
 input{
 padding:10px;
@@ -52,7 +94,7 @@ border-radius:8px;
 margin-bottom:15px;
 }
 
-/* nút */
+/* BUTTON */
 
 button{
 padding:10px 25px;
@@ -64,11 +106,11 @@ font-size:16px;
 cursor:pointer;
 }
 
-/* tim bay */
+/* TIM BAY */
 
 .heart{
 position:fixed;
-bottom:-50px;
+bottom:-40px;
 font-size:20px;
 animation:fly 6s linear infinite;
 }
@@ -89,6 +131,14 @@ opacity:0;
 
 <body>
 
+<h1 class="title">
+A Puzzle Made Just For You
+</h1>
+
+<p class="subtitle">
+A few questions, a few memories, and a little surprise waiting.
+</p>
+
 <div class="box">
 
 <div id="question" class="question">
@@ -97,13 +147,13 @@ Câu 1: Ngày đầu tiên mình gặp nhau là ngày nào?
 
 <input id="answer" placeholder="Nhập câu trả lời">
 
-<br>
-
 <button onclick="check()">Trả lời</button>
 
 </div>
 
 <script>
+
+/* CÂU HỎI */
 
 const questions=[
 "Câu 1: Ngày đầu tiên mình gặp nhau là ngày nào?",
@@ -150,7 +200,7 @@ alert("Sai rồi nha 😝")
 
 }
 
-/* tạo tim bay */
+/* TIM BAY */
 
 function createHeart(){
 
